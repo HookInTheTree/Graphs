@@ -9,6 +9,11 @@ namespace Graphs.Extensions
 {
     public static class NodeExtensions
     {
+        /// <summary>
+        /// Обход графа в ширину, начиная с данной вершины
+        /// </summary>
+        /// <param name="startNode"></param>
+        /// <returns></returns>
         public static IEnumerable<Node> BreadthSearch(this Node startNode)
         {
             var visited = new HashSet<Node>();
@@ -31,6 +36,12 @@ namespace Graphs.Extensions
             }
         }
 
+
+        /// <summary>
+        /// Обход графа в глубину, начиная с данной вершины
+        /// </summary>
+        /// <param name="startNode"></param>
+        /// <returns></returns>
         public static IEnumerable<Node> DepthSearch(this Node startNode)
         {
             var stack = new Stack<Node>();
@@ -54,28 +65,4 @@ namespace Graphs.Extensions
 
     }
 
-    public static class GraphExtensions
-    {
-        public static IEnumerable<IEnumerable<Node>> FindConnectedComponents(this Graph graph)
-        {
-            var marked = new HashSet<Node>();
-
-            while (true)
-            {
-                var node = graph.Nodes
-                    .Where(x => !marked.Contains(x) )
-                    .FirstOrDefault();
-
-                if (node == null) break;
-
-                var breadthSearch = node.BreadthSearch().ToList();
-
-                foreach(var visitedNode in breadthSearch)
-                {
-                    marked.Add(visitedNode);
-                }
-                yield return breadthSearch;
-            }
-        }
-    }
 }

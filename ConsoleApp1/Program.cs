@@ -33,5 +33,22 @@ public class Program
             )
             .Aggregate((z, v) => z + "\n" + v)
         );
+
+        var graph3 = Graph.CreateGraph(
+            Tuple.Create(0, 2),
+            Tuple.Create(0, 4),
+            Tuple.Create(2, 3),
+            Tuple.Create(2, 1),
+            Tuple.Create(4, 5),
+            Tuple.Create(4, 6),
+            Tuple.Create(5, 7),
+            Tuple.Create(2, 8)
+            );
+
+        var shortestPath = graph3.FindShortestPath(graph3[0], graph3[8]);
+        var printedPath = shortestPath
+            .Select(x => x.ToString() )
+            .Aggregate( (a, b) => a + "-" + b);
+        Console.WriteLine(printedPath);
     }
 }
