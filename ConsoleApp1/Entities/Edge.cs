@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1.Entities
+namespace Graphs.Entities
 {
-    class Edge
+    public class Edge
     {
         public readonly Node First;
         public readonly Node Second;

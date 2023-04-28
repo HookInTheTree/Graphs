@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1.Entities
+namespace Graphs.Entities
 {
-    class Node
+    public class Node
     {
         private readonly List<Edge> incidentEdges = new List<Edge>();
         public IEnumerable<Node> IncidentNodes
@@ -40,17 +40,23 @@ namespace ConsoleApp1.Entities
             return Number.ToString();
         }
 
-        public void Connect(Node anotherNode)
+        public static Edge Connect(Node firstNode, Node secondNode, Graph graph)
         {
-            var newEdge = new Edge(this, anotherNode);
-            incidentEdges.Add(newEdge);
-            anotherNode.incidentEdges.Add(newEdge);
+            if (!graph.Nodes.Contains(firstNode) ||
+                !graph.Nodes.Contains(secondNode))
+                throw new ArgumentException("Одна из вершин не принадлежит графу!");
+
+            var newEdge = new Edge(firstNode, secondNode);
+            firstNode.incidentEdges.Add(newEdge);
+            secondNode.incidentEdges.Add(newEdge);
+            return newEdge;
         }
 
-        public void Disconnect(Edge edge)
+        public static void Disconnect(Edge edge)
         {
             edge.First.incidentEdges.Remove(edge);
             edge.Second.incidentEdges.Remove(edge);
         }
+
     }
 }

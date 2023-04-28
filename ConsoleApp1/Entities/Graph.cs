@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1.Entities
+namespace Graphs.Entities
 {
-    class Graph
+    public class Graph
     {
         private readonly Node[] nodes;
         public IEnumerable<Node> Nodes
@@ -40,6 +40,30 @@ namespace ConsoleApp1.Entities
             {
                 return nodes[index];
             }
+        }
+
+        public void Connect(int index1, int index2)
+        {
+            Node.Connect(nodes[index1], nodes[index2], this);
+        }
+
+        public void Disconnect(Edge edge)
+        {
+            Node.Disconnect(edge);
+        }
+
+        public static Graph CreateGraph(params Tuple<int,int>[] incidentNodes)
+        {
+
+            var maxPoint = incidentNodes
+                .SelectMany(x => new[] { x.Item1, x.Item2 })
+                .Max();
+
+            var graph = new Graph(maxPoint+ 1);
+
+            foreach (var edge in incidentNodes)
+                graph.Connect(edge.Item1, edge.Item2);
+            return graph;
         }
     }
 }
